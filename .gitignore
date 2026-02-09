@@ -73,3 +73,13 @@ personal-doc-agent.code-workspace
 # ======================
 tests/myScripts
 docs/myDocs
+
+# Test artifacts
+data/documents/*
+data/chats/*
+data/kiro/*
+data/invoices/*
+!data/documents/.gitkeep
+!data/chats/.gitkeep
+!data/kiro/.gitkeep
+!data/invoices/.gitkeep
