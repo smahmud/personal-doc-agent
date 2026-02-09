@@ -1,13 +1,45 @@
-langchain==0.1.0
-langchain-community==0.0.10
-chromadb==0.4.22
+# ======================
+# Core Framework
+# ======================
 fastapi==0.109.0
-uvicorn==0.27.0
+uvicorn[standard]==0.27.0
 pydantic==2.5.3
+pydantic-settings==2.1.0
 python-multipart==0.0.6
-ollama==0.1.6
-pymupdf==4.0.1
+
+# ======================
+# Document Parsing
+# ======================
+PyMuPDF==1.24.14
 python-docx==1.1.0
+
+# ======================
+# Vector Store
+# ======================
+chromadb==0.4.22
+
+# ======================
+# LLM & Agent
+# ======================
+langchain==0.1.0
+langchain-community==0.0.13
+ollama==0.1.6
+
+# ======================
+# Utilities
+# ======================
+aiofiles==23.2.1
+httpx==0.25.2
 beautifulsoup4==4.12.3
+
+# ======================
+# Frontend (Streamlit)
+# ======================
 streamlit==1.28.1
-pytest==7.4.3
+requests==2.32.5
+
+# ======================
+# Development & Testing
+# ======================
+pytest==7.4.4
+pytest-asyncio==0.23.3

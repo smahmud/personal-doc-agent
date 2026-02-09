@@ -1,0 +1,74 @@
+services:
+  # ======================
+  # Core API Service
+  # ======================
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: pda-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app/backend
+      - ./data:/data
+    environment:
+      - PYTHONUNBUFFERED=1
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - CHROMA_HOST=chromadb
+      - CHROMA_PORT=8000
+    depends_on:
+      - chromadb
+    networks:
+      - pda-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # ======================
+  # Vector Database (ChromaDB)
+  # ======================
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: pda-chromadb
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma-data:/chroma/chroma
+    environment:
+      - ANONYMIZED_TELEMETRY=false
+    networks:
+      - pda-network
+
+  # ======================
+  # Frontend (Streamlit MVP)
+  # ======================
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: pda-frontend
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./frontend:/app/frontend
+    environment:
+      - API_URL=http://api:8000
+    depends_on:
+      - api
+    networks:
+      - pda-network
+
+# ======================
+# Volumes
+# ======================
+volumes:
+  chroma-data:
+    name: pda-chroma-data
+
+# ======================
+# Networks
+# ======================
+networks:
+  pda-network:
+    driver: bridge
+    name: pda-network

@@ -1,60 +1,75 @@
+# ======================
 # Python
+# ======================
 __pycache__/
 *.py[cod]
-*.class
+*$py.class
 *.so
 .Python
-env/
 venv/
+env/
+.venv/
 ENV/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
 .eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
 *.egg-info/
-.installed.cfg
 *.egg
 
-# Virtual environments
-venv/
-.venv
+# ======================
+# Environment
+# ======================
+.env
+.env.local
+.env.*.local
 
+# ======================
 # IDE
+# ======================
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
 
-# Environment
-.env
-.env.local
+# ======================
+# Testing
+# ======================
+.pytest_cache/
+.coverage
+htmlcov/
+test_imports.py
 
-# Data
-chroma_db/
-data/raw/
+# ======================
+# Docker
+# ======================
+# Don't ignore docker-compose.yml or Dockerfiles
+
+# ======================
+# Data (local only)
+# ======================
+data/
 *.pdf
-*.xlsx
+*.docx
+*.doc
 
+# ======================
 # OS
+# ======================
 .DS_Store
 Thumbs.db
 
+# ======================
 # Logs
+# ======================
 *.log
+logs/
 
-# Docker
-docker-compose.override.yml
-
-
+# ======================
 # VS Workspace
+# ======================
 personal-doc-agent.code-workspace
+
+# ======================
+# My Stuff
+# ======================
+tests/myScripts
+docs/myDocs

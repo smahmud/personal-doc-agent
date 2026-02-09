@@ -20,11 +20,13 @@ class TextParser(BaseParser):
         try:
             # Try multiple encodings
             raw_text = None
+            encoding_used = None
             encodings = ['utf-8', 'utf-16', 'latin-1', 'cp1252']
             
             for encoding in encodings:
                 try:
                     raw_text = filepath.read_text(encoding=encoding)
+                    encoding_used = encoding
                     break
                 except UnicodeDecodeError:
                     continue
@@ -33,7 +35,7 @@ class TextParser(BaseParser):
                 raise ValueError("Unable to decode file with supported encodings")
             
             metadata = self.extract_metadata(filepath)
-            metadata['encoding'] = encoding
+            metadata['encoding'] = encoding_used
             
             # Detect if markdown
             doc_type = DocumentType.MD if filepath.suffix.lower() in ['.md', '.markdown'] else DocumentType.TXT
@@ -57,8 +59,12 @@ class TextParser(BaseParser):
             )
             
         except Exception as e:
+            import hashlib
+            # Generate ID without using filepath.stat() since file may not exist
+            fallback_id = hashlib.sha256(filepath.name.encode()).hexdigest()[:16]
+            
             return ParsedDocument(
-                id=self.generate_id(filepath),
+                id=fallback_id,
                 filename=filepath.name,
                 filepath=str(filepath),
                 category=DocumentCategory.GENERAL,
